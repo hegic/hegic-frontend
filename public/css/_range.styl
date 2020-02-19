@@ -1,0 +1,328 @@
+.vue-slider
+  margin: auto 20px auto 0;
+.vue-slider-ltr
+  height 6px !important
+.vue-slider-dot
+  position: absolute
+  -webkit-transition: all 0s
+  transition: all 0s
+  z-index: 5
+
+.vue-slider-dot-tooltip
+  position: absolute
+  visibility: hidden
+
+.vue-slider-dot-hover:hover .vue-slider-dot-tooltip,
+.vue-slider-dot-tooltip-show
+  visibility: visible
+
+.vue-slider-dot-tooltip-top
+  top: -10px
+  left: 50%
+  -webkit-transform: translate(-50%,-100%)
+  transform: translate(-50%,-100%)
+
+.vue-slider-dot-tooltip-bottom
+  bottom: -10px
+  left: 50%
+  -webkit-transform: translate(-50%,100%)
+  transform: translate(-50%,100%)
+
+.vue-slider-dot-tooltip-left
+  left: -10px
+  top: 50%
+  -webkit-transform: translate(-100%,-50%)
+  transform: translate(-100%,-50%)
+
+.vue-slider-dot-tooltip-right
+  right: -10px
+  top: 50%
+  -webkit-transform: translate(100%,-50%)
+  transform: translate(100%,-50%)
+
+.vue-slider-marks
+  position: relative
+  width: 100%
+  height: 100%
+
+.vue-slider-mark
+  position: absolute
+  z-index: 1
+
+.vue-slider-ltr .vue-slider-mark,
+.vue-slider-rtl .vue-slider-mark
+  width: 0
+  height: 100%
+  top: 50%
+
+.vue-slider-ltr .vue-slider-mark-step,
+.vue-slider-rtl .vue-slider-mark-step
+  top: 0
+
+.vue-slider-ltr .vue-slider-mark-label,
+.vue-slider-rtl .vue-slider-mark-label
+  top: 100%
+  margin-top: 10px
+
+.vue-slider-ltr .vue-slider-mark
+  -webkit-transform: translate(-50%,-50%)
+  transform: translate(-50%,-50%)
+
+.vue-slider-ltr .vue-slider-mark-step
+  left: 0
+
+.vue-slider-ltr .vue-slider-mark-label
+  left: 50%
+  -webkit-transform: translateX(-50%)
+  transform: translateX(-50%)
+
+.vue-slider-rtl .vue-slider-mark
+  -webkit-transform: translate(50%,-50%)
+  transform: translate(50%,-50%)
+
+.vue-slider-rtl .vue-slider-mark-step
+  right: 0
+
+.vue-slider-rtl .vue-slider-mark-label
+  right: 50%
+  -webkit-transform: translateX(50%)
+  transform: translateX(50%)
+
+.vue-slider-btt .vue-slider-mark,
+.vue-slider-ttb .vue-slider-mark
+  width: 100%
+  height: 0
+  left: 50%
+
+.vue-slider-btt .vue-slider-mark-step,
+.vue-slider-ttb .vue-slider-mark-step
+  left: 0
+
+.vue-slider-btt .vue-slider-mark-label,
+.vue-slider-ttb .vue-slider-mark-label
+  left: 100%
+  margin-left: 10px
+
+.vue-slider-btt .vue-slider-mark
+  -webkit-transform: translate(-50%,50%)
+  transform: translate(-50%,50%)
+
+.vue-slider-btt .vue-slider-mark-step
+  top: 0
+
+.vue-slider-btt .vue-slider-mark-label
+  top: 50%
+  -webkit-transform: translateY(-50%)
+  transform: translateY(-50%)
+
+.vue-slider-ttb .vue-slider-mark
+  -webkit-transform: translate(-50%,-50%)
+  transform: translate(-50%,-50%)
+
+.vue-slider-ttb .vue-slider-mark-step
+  bottom: 0
+
+.vue-slider-ttb .vue-slider-mark-label
+  bottom: 50%
+  -webkit-transform: translateY(50%)
+  transform: translateY(50%)
+
+.vue-slider-mark-label,
+.vue-slider-mark-step
+  position: absolute
+
+.vue-slider
+  position: relative
+  -webkit-box-sizing: content-box
+  box-sizing: content-box
+  -webkit-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+  display: block
+  -webkit-tap-highlight-color: rgba(0,0,0,0)
+
+.vue-slider-rail
+  position: relative
+  width: 100%
+  height: 100%
+  -webkit-transition-property: width,height,left,right,top,bottom
+  transition-property: width,height,left,right,top,bottom
+
+.vue-slider-process
+  position: absolute
+  z-index: 1
+
+/* component style */
+.vue-slider-disabled .vue-slider-process {
+  background-color: #577d8f;
+}
+.vue-slider-disabled .vue-slider-dot-handle {
+  border-color: #2c4c59;
+}
+.vue-slider-disabled .vue-slider-mark-step-active {
+  box-shadow: 0 0 0 2px #577d8f;
+}
+
+/* rail style */
+.vue-slider-rail {
+  background-color: whitesmoke;
+  border-radius: 15px;
+  transition: background-color 0.3s;
+}
+.vue-slider:hover .vue-slider-rail {
+  background-color: #e1e1e1;
+}
+
+/* process style */
+.vue-slider-process {
+  background-color: #577d8f;
+  border-radius: 15px;
+  transition: background-color 0.3s;
+}
+.vue-slider:hover .vue-slider-process {
+  background-color: #2c4c59;
+}
+
+/* mark style */
+.vue-slider-mark-step {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px #e8e8e8;
+  background-color: #fff;
+}
+.vue-slider-mark-step-active {
+  box-shadow: 0 0 0 2px #2c4c59;
+}
+.vue-slider:hover .vue-slider-mark-step-active {
+  box-shadow: 0 0 0 2px #2c4c59;
+}
+
+.vue-slider-mark-label {
+  font-size: 12px;
+  white-space: nowrap;
+}
+/* dot style */
+.vue-slider-dot-handle {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 3px solid #577d8f;
+  box-sizing: border-box;
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+.vue-slider:hover .vue-slider-dot-handle {
+  border-color: #2c4c59;
+}
+
+.vue-slider-dot-handle-focus {
+  border-color: #577d8f;
+  // box-shadow: 0 0 0 5px rgba(54, 171, 255, 0.2);
+}
+.vue-slider:hover .vue-slider-dot-handle-focus {
+  border-color: #577d8f;
+}
+
+.vue-slider-dot-handle:hover {
+  border-color: #2c4c59;
+}
+.vue-slider:hover .vue-slider-dot-handle:hover {
+  border-color: #2c4c59;
+}
+
+.vue-slider-dot-handle-disabled {
+  cursor: not-allowed;
+  border-color: #ddd !important;
+}
+
+.vue-slider-dot-tooltip {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+}
+.vue-slider-dot-tooltip-inner {
+  font-size: 18px;
+  white-space: nowrap;
+  padding: 3px 6px;
+  color: #fff;
+  border-radius: 5px;
+  border-color: #2c4c59;
+  background-color: #2c4c59;
+  // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transform: scale(0.9);
+  transition: transform 0.3s;
+}
+.vue-slider-dot-tooltip-inner::after {
+  content: "";
+  position: absolute;
+}
+.vue-slider-dot-tooltip-inner-top::after {
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  height: 0;
+  width: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px;
+  border-top-color: inherit;
+}
+.vue-slider-dot-tooltip-inner-bottom::after {
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  height: 0;
+  width: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px;
+  border-bottom-color: inherit;
+}
+.vue-slider-dot-tooltip-inner-left::after {
+  left: 100%;
+  top: 50%;
+  transform: translate(0, -50%);
+  height: 0;
+  width: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px;
+  border-left-color: inherit;
+}
+.vue-slider-dot-tooltip-inner-right::after {
+  right: 100%;
+  top: 50%;
+  transform: translate(0, -50%);
+  height: 0;
+  width: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px;
+  border-right-color: inherit;
+}
+.vue-slider-dot-tooltip-inner-top {
+  transform-origin: 50% 100%;
+}
+.vue-slider-dot-tooltip-inner-bottom {
+  transform-origin: 50% 0;
+}
+.vue-slider-dot-tooltip-inner-left {
+  transform-origin: 100% 50%;
+}
+.vue-slider-dot-tooltip-inner-right {
+  transform-origin: 0% 50%;
+}
+
+.vue-slider-dot:hover .vue-slider-dot-tooltip, .vue-slider-dot-tooltip-show {
+  opacity: 1;
+  visibility: visible;
+}
+.vue-slider-dot:hover .vue-slider-dot-tooltip .vue-slider-dot-tooltip-inner, .vue-slider-dot-tooltip-show .vue-slider-dot-tooltip-inner {
+  transform: scale(1);
+}
+
+/*# sourceMappingURL=antd.css.map */
+

@@ -1,0 +1,587 @@
+@import 'nib'
+@import '_range'
+
+
+@font-face {
+	font-family: 'FuturaBook'
+	src: url('/fonts/FuturaPT-Book.ttf') format('truetype')
+	font-weight: normal
+	font-style: normal
+}
+@font-face {
+	font-family: 'FuturaBold'
+	src: url('/fonts/FuturaPT-Bold.ttf') format('truetype')
+	font-weight: normal
+	font-style: normal
+}
+@font-face {
+	font-family: 'Logo'
+	src: url('/fonts/Marske.ttf') format('truetype')
+	font-weight: normal
+	font-style: normal
+}
+
+
+color-background = #FEFEFE
+color-fonts =  #2c4c59
+color-main = #577d8f
+color-hover = #2c4c59
+color-mini-info-title = #7B9EA6
+color-mini-info-content = #7b9ea633
+
+color-dark = #323859
+
+
+.logo
+	margin auto 30px auto 0
+	cursor pointer
+	font-family Logo
+	font-size 36px
+	color color-fonts
+	font-weight bold
+	
+
+body
+	min-width 1240px
+	margin 0
+	*
+		font-family FuturaBook
+.main
+	margin 0
+	display flex
+	overflow: auto;
+	flex-direction: column;
+	&.loading
+		height 100vh
+		position relative
+		>*
+			display none
+		&:before
+			content ""
+			height 100%
+			width 100%
+			position absolute
+			background #e4eced
+		&:after			
+			content ""
+			height 200px
+			width 200px
+			position absolute
+			background: url(/assets/images/load.svg);
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center;
+			top: 0;
+			transform: translate(-50%,-50%);
+			top 50%
+			left 50%
+.main__page
+	padding 20px 50px 60px 50px
+	box-sizing: border-box;
+	height auto
+	display flex
+	flex-direction column
+	&.first
+		min-height 700px
+		background url("/assets/images/f2.jpeg")
+		background-size: cover;
+		background-repeat: no-repeat;
+		height 100vh
+		max-height 1200px
+		display flex
+		flex-direction column
+		padding 30px 10px
+		box-shadow: 0px 0px 4px 1px color-main;
+	&.fix-padding
+		padding-top 60px
+	&.third
+		background: #e4eced;
+		box-shadow: 0px 0px 3px 0px color-main
+		margin-bottom: 40px;
+		margin-top: 30px;
+		padding: 30px 50px 20px 50px;
+.page-first-box
+	display: flex;
+	flex-direction: column;
+	margin: auto 50px auto 50vw;
+	.big-title
+		text-align center
+.page-first-buttons
+	display: flex;
+	justify-content: center;
+	.button
+		width 200px
+.main__footer
+	background color-main
+	padding 20px 50px
+.links
+	display flex
+	justify-content: space-between;
+	width: 600px;
+	margin: auto;
+.links__link
+	cursor pointer
+	color white
+	font-size 18px
+	border-bottom 1px solid transparent
+	&:hover
+		border-bottom 1px solid white
+.copyright
+	color white
+	font-size 18px
+	text-align center
+	margin-top 20px
+.tab-nemu
+	display flex
+	flex 1
+	.mini-title
+		font-weight normal
+		cursor pointer
+		border-bottom 1px solid transparent
+		&:hover
+			border-bottom 1px solid color-hover
+.page__header
+	flex-direction: row;
+	display: flex;
+	padding  10px 50px 30px 50px
+	justify-content: space-between;
+.big-title
+	font-size 36px
+	font-weight: bold;
+	padding 10px 0 30px 0
+	line-height: 50px;
+	color color-fonts
+	font-family FuturaBold
+.mini-title
+	font-size 18px
+	font-weight: bold;
+	line-height: 22px;
+	color color-fonts
+	&.center
+		text-align center
+	&.m-a
+		margin auto 20px
+		
+.default-text
+	font-size 18px
+	line-height: 24px;
+	color color-fonts
+	&.center
+		text-align center
+	&.page-1
+		width: 480px;
+		margin: 0 auto 40px auto;
+	&.beta
+		font-weight: 600;
+		position relative
+		&:before
+			content ''
+			position absolute
+			height 10px
+			width 10px 
+			border-radius 5px
+			top: 50%;
+			transform: translate(-150%, -50%);
+			background #fa5555
+.button
+	background color-main
+	border none
+	padding 8px 25px
+	cursor pointer
+	border-radius: 4px;
+	font-size 18px
+	line-height: 24px;
+	color white
+	outline none
+	margin: auto 10px;
+	&.fix-w
+		width: 250px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	&.dark
+		background color-hover
+		&:hover
+			background color-dark
+	&:hover
+		background color-hover
+	&.m-a
+		margin autobutton dark
+	&[disabled]
+		font-size 0
+		position relative
+		&:before
+			content ""
+			height 100%
+			width 48px
+			position absolute
+			background: url(/assets/images/dots-loader.svg);
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center;
+			top: 0;
+			transform: translate(-50%,0);
+			
+span
+	&.bold
+		font-weight 600
+
+
+
+.a-hot-fix
+	margin: auto 0;
+	display: flex;
+	.button
+		flex 1
+
+.opacity-0
+	opacity: 0;
+
+.min-cards
+	display flex
+	flex-wrap wrap
+	position relative
+	margin-bottom 30px
+	margin-top: 25px;
+	justify-content: space-between;
+.min-cards__card
+	flex-direction: column;
+	width 33%
+	display flex
+	&.f-1
+		&:nth-child(3n)
+			.min-card__box
+				margin 20px 0 20px 20px
+	&.f-1
+		&:nth-child(3n+1)
+			.min-card__box
+				margin 20px 20px 20px 0
+	&.f-2
+		width 50%
+	&.f-none
+		width 0
+	&.f-2-4
+		width 25%
+		&:nth-child(4n)
+			.min-card__box
+				margin 20px 0 20px 20px
+		&:nth-child(4n+1)
+			.min-card__box
+				margin 20px 20px 20px 0
+.min-card__box
+	margin 20px
+	display flex
+	flex-direction column
+	border-radius 4px
+	overflow auto
+	flex: 1;
+	box-shadow: 0px 0px 4px 0 color-main;
+	&.b-none
+		box-shadow: none
+		height: 130px
+		overflow: visible;
+		&.with-slider
+			>*
+				margin auto 0
+		.button
+			margin auto 0
+			padding 18px 25px
+.min-card__head
+	padding 5px
+	background color-main
+	font-size 18px
+	color white
+	flex 1
+	min-height 70px
+	text-align: center;
+	display flex
+	.m-a
+		margin auto
+.min-card__content
+	padding 10px
+	font-size 18px
+	color color-fonts
+	text-align center
+	flex 1
+	background color-mini-info-content
+	text-overflow: ellipsis;
+	overflow: hidden;
+
+.page-2-fix
+	margin: auto;
+	text-align: center;
+
+.emit-table-box
+	display flex
+	text-align: center;
+	border-bottom 1px solid color-main
+	&.b-n
+		border none
+		margin-bottom: 50px;
+	
+.emit-table-box__elem
+	flex 1
+	padding 10px
+	border-right 1px solid color-main
+	margin 0
+	display flex
+	justify-content: center;
+	.m-a
+		margin auto
+	&:last-child
+		border none
+	
+.flex
+	display flex
+	&.page-2
+		margin 50px 0
+		>.flex-1
+			display flex
+			flex-direction: column;
+			justify-content: space-evenly;
+.flex-1
+	flex 1
+.flex-colunm
+	flex-direction: column;
+
+.page-2-right-box
+	margin-left 40px
+	justify-content: space-between;
+	.default-text
+		margin 10px 0 20px 0
+		text-align center
+	.button
+		margin 5px 0 0 0
+		padding 14px 25px
+	.big-title
+		padding 0
+		text-align center
+
+.mini-box
+	width: 550px;
+	margin: 0 auto;
+
+a
+	text-decoration none
+
+.page-2-f-3-box
+	.big-title
+		margin auto
+	.button
+		margin: auto;
+		width: 250px;
+		padding 12px 25px
+	.fix-margin-1
+		margin-top 40px
+
+.history-box
+	display flex
+	flex-direction column
+	border-radius 4px
+	overflow auto
+.history-box__history
+	display flex
+	flex-direction column
+	flex 1
+	&.open
+		.history-box__content
+			display flex
+		.history-box__header
+			background: #466675//color-hover
+			&:after
+				transform: rotate(180deg);
+.history-box__header
+	background color-main
+	color white
+	font-size 18px
+	padding: 10px;
+	cursor pointer
+	position relative
+	&:hover
+		background: #466675//color-hover
+	&:after
+		content ''
+		height 100%
+		width 12px
+		position absolute
+		background url("/assets/images/down.svg")
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position center
+		right 10px
+		top 0
+.history-box__content
+	background color-mini-info-content
+	font-size 18px
+	color color-fonts
+	display none
+	table
+		flex 1
+		width 100%
+		margin 10px auto
+		text-align center
+		td
+			padding 5px 15px
+
+
+label.input-with-currency
+	display block
+	margin auto 0
+	cursor text
+	position relative
+	&[data-currency='ETH']
+		&:after
+			position: absolute;
+			content ''
+			right: 15px;
+			height 100%
+			width 35px
+			background: url("/assets/images/ETH.svg")
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center;
+		.input
+			padding 5px 55px 5px 15px
+.input
+	width: 100%;
+	outline none
+	border 1px solid color-hover
+	border-radius 4px
+	flex 1
+	font-size 38px
+	font-weight 600
+	color color-fonts
+	background inherit
+	box-sizing border-box
+
+.big-value
+	font-size 36px
+	font-weight 600
+	color color-fonts
+	padding: 10px;
+	&.center
+		text-align center
+
+
+.mini-box-info
+	display flex
+	flex-direction column
+
+	margin: 10px 0;
+	border-radius: 4px;
+	overflow auto
+	&.open
+		.mini-box-info__content
+			display flex
+		.mini-box-info__title
+			background: #466675//color-hover
+			&:after
+				transform: rotate(180deg);
+.mini-box-info__title
+	cursor pointer
+	display flex
+	padding: 10px;
+	font-size: 18px;
+	color white
+	background: color-main
+	position relative
+	&:hover
+		background: #466675//color-hover
+	&:after
+		content ''
+		height 100%
+		width 12px
+		position absolute
+		background url("/assets/images/down.svg")
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position center
+		right 10px
+		top 0
+.mini-box-info__content
+	font-size: 18px;
+	padding: 10px;
+	display none
+	color color-fonts
+	background color-mini-info-content
+
+
+.tiles-info
+	display flex
+	position relative
+.tile-info
+	display flex
+	flex 1
+	&:nth-child(2n)
+		.tile-info__box
+			margin 20px 0 20px 20px
+	&:nth-child(2n+1)
+		.tile-info__box
+			margin 20px 20px 20px 0
+.tile-info__content
+	font-size: 18px;
+	color: color-fonts
+	p
+		&:last-child
+			margin-bottom 0
+.tile-info__title
+	font-size: 18px;
+	color: color-fonts
+	font-weight: 600;
+.tile-info__box
+	padding 30px 30px 30px 110px
+	margin 20px
+	border 1px solid #577d8f
+	border-radius 4px
+	min-height: 60px;
+	position relative
+	background white
+	&.holders
+		&:before
+			content ''
+			height 100%
+			width 110px
+			position absolute
+			background url("/assets/images/holders.svg")
+			background-size: 60px;
+			background-repeat: no-repeat;
+			background-position center
+			left 0
+			top 0
+	&.peoples
+		&:before
+			content ''
+			height 100%
+			width 110px
+			position absolute
+			background url("/assets/images/peoples.svg")
+			background-size: 60px;
+			background-repeat: no-repeat;
+			background-position center
+			left 0
+			top 0
+	&.miners
+		&:before
+			content ''
+			height 100%
+			width 110px
+			position absolute
+			background url("/assets/images/miners.svg")
+			background-size: 60px;
+			background-repeat: no-repeat;
+			background-position center
+			left 0
+			top 0
+	&.traders
+		&:before
+			content ''
+			height 100%
+			width 110px
+			position absolute
+			background url("/assets/images/traders.svg")
+			background-size: 60px;
+			background-repeat: no-repeat;
+			background-position center
+			left 0
+			top 0
+		
