@@ -3,6 +3,10 @@
 import VueRangeSlider from 'vue-slider-component'
 import Web3 from 'web3'
 import HedgeContractArtifact from '../static/HedgeContract.json'
+
+const WalletConnectProvider = window.WalletConnectProvider.default
+const Web3Connect = window.Web3Connect.default
+
 const BN = Web3.utils.BN
 
 export default {
@@ -16,8 +20,9 @@ export default {
 			connecting: false,
 			processing: false,
 			swapping:false,
-			metaHref: null,
-			web3:null
+			web3: null,
+			web3Connect: null,
+			provider: null,
 		}
 	},
 	watch:{
@@ -26,7 +31,20 @@ export default {
 		}
 	},
 	mounted(){
-		this.metaHref = window.ethereum ? null : 'https://metamask.io'
+		this.web3Connect = new Web3Connect.Core({
+			cacheProvider: true,
+			providerOptions: {
+				walletconnect: {
+					package: WalletConnectProvider,
+					options: {
+						infuraId: "e6e5816422864621b96685a7beb721b9"
+					}
+				}
+			}
+		});
+		if (this.web3Connect.cacheProvider) {
+			this.methods.connect();
+		}
 		//this.$el.classList.remove('loading')
 		const updatePrice = () => fetch('https://api.coinmarketcap.com/v1/ticker/ethereum/')
 			.then(x=>x.json())
@@ -36,37 +54,54 @@ export default {
 		setInterval(updatePrice, 5000)
 	},
 	methods:{
-		connect(){
-			if(this.web3) {
-				this.web3 = null
-				this.account = null
-				this.hedges = []
-				//clearInterval(this.hedgesInterval)
-			}
-			else {
-				const web3 = new Web3(ethereum)
-				this.connecting = true
-				ethereum.enable().then(accounts => {
-					this.account = accounts[0]
-					this.contracts = {
-						Hedge: new web3.eth.Contract(
-							HedgeContractArtifact.abi,
-							'0x27b6125328ca57d5d96baAa4F9cA8C5EdBaFe016',
-							{from:accounts[0]})
-					}
+    connect() {
+      if (this.web3) {
+				if (this.provider.close) {
+					this.provider.close();
+				}
+				if (this.web3Connect) {
+					this.web3Connect.clearCachedProvider();
+				}
+				this.web3 = null;
+				this.web3Connect = null;
+        this.provider = null;
+        this.account = null;
+        this.hedges = [];
+        //clearInterval(this.hedgesInterval)
+      } else {
+        this.connecting = true;
+        this.web3Connect
+          .connect()
+          .then(provider => {
+            this.provider = provider;
+            const web3 = new Web3(provider);
+            web3.eth
+              .getAccounts()
+              .then(accounts => {
+                this.web3 = web3;
+                this.connecting = false;
+                this.account = accounts[0];
+                this.contracts = {
+                  Hedge: new web3.eth.Contract(
+                    HedgeContractArtifact.abi,
+                    "0x27b6125328ca57d5d96baAa4F9cA8C5EdBaFe016",
+                    { from: accounts[0] }
+                  )
+                };
 
-					return this.renewHedges()
-				})
-				.then(() => {
-					this.web3 = web3
-					this.connecting = false
-				})
-				.catch(err => {
-					this.connecting = false
-				})
-					//this.hedgesInterval = setInterval(() => this.renewHedges(), 1000)
-			}
-		},
+                return this.renewHedges();
+              })
+              .catch(err => {
+                this.connecting = false;
+              });
+          })
+          .catch(err => {
+            this.connecting = false;
+          });
+
+        //this.hedgesInterval = setInterval(() => this.renewHedges(), 1000)
+      }
+    },
 		hedgeActivate(){
 			const {Hedge} = this.contracts
 			const amount = new Web3.utils.BN(this.ethAmount * 1e10).mul(new BN(1e8))
@@ -147,13 +182,13 @@ export default {
 			<div class="tab-nemu">
 				<a href="#hedge" class="mini-title m-a">Hedge contract</a>
 				<a href="#use-cases" class="mini-title m-a">Use cases</a>
-				<a href="#faq"class="mini-title m-a">FAQ</a>
+				<a href="#faq" class="mini-title m-a">FAQ</a>
 			</div>
-			<a target="_blank" v-bind:href="metaHref">
+			<a>
 				<button 
 					class="button dark fix-w"
 					:disabled="connecting" @click="connect">
-						{{web3 ? `Disconnect : ${account}` :'Connect MetaMask'}}
+						{{web3 ? `Disconnect : ${account}` :'Connect Wallet'}}
 				</button>
 			</a>
 		</div>
@@ -212,11 +247,11 @@ export default {
 				<div class="mini-title center opacity-0">---</div>
 				<div class="min-card__box b-none">
 
-					<a class="a-hot-fix" target="_blank" v-bind:href="metaHref">
+					<a class="a-hot-fix">
 						<button
 							class="button dark" 
 							:disabled="connecting"
-							@click="connect">Connect MetaMask  &amp; Activate</button>
+							@click="connect">Connect Wallet  &amp; Activate</button>
 					</a>
 				</div>
 			</div>
@@ -385,7 +420,7 @@ export default {
 				<div class="default-text">
 					After clicking the "Pay and Activate" button 
 					you will need to confirm the transaction for
-					<span class="bold">{{ethCost}} ETH</span> in your MetaMask account.
+					<span class="bold">{{ethCost}} ETH</span> in your Wallet account.
 					Hedge contract will be activated immidiately 
 					after the transaction is confirmed by miners.
 					After that you will have a right to swap 
@@ -520,7 +555,7 @@ export default {
 			<div class="mini-box-info" onclick="this.classList.toggle('open')">
 				<div class="mini-box-info__title">How can I start using hedge contracts?</div>
 				<div class="mini-box-info__content" @click.stop>
-					You choose the amount of ETH that you want to hold a hedge contract for and a period of holding. Strike (execution) price of a hedge contract is always the current market price of ETH (at-the-money hedge contract). Premium and settlement fee are calculated for the chosen amount and period. After that, you will be asked to pay the amount in ETH (premium plus fee) using your MetaMask account. After miners confirm the transaction, you will be able to use your ETH-address to execute the hedge contract during a certain period. In order to execute it, you should send ETH to the contract and use the release function. You will automatically receive DAI to your ETH-address.
+					You choose the amount of ETH that you want to hold a hedge contract for and a period of holding. Strike (execution) price of a hedge contract is always the current market price of ETH (at-the-money hedge contract). Premium and settlement fee are calculated for the chosen amount and period. After that, you will be asked to pay the amount in ETH (premium plus fee) using your Wallet account. After miners confirm the transaction, you will be able to use your ETH-address to execute the hedge contract during a certain period. In order to execute it, you should send ETH to the contract and use the release function. You will automatically receive DAI to your ETH-address.
 			</div>
 			</div>
 			<div class="mini-box-info" onclick="this.classList.toggle('open')">
@@ -538,7 +573,7 @@ export default {
 			<div class="mini-box-info" onclick="this.classList.toggle('open')">
 				<div class="mini-box-info__title">How can I execute a hedge contract if your website's front-end is offline for some reasons?</div>
 				<div class="mini-box-info__content" @click.stop>
-					Visit https://etherscan.io/dapp, paste the hedge contract address and click the "Search" button. Connect your MetaMask account and click the "Write contract" button. Go to the "Release" section (2). Paste number that is equal to the amount of ETH that you have activated a hedge contract for (for example, 1) and your hedgeID (for example, 20). Your hedgeID can be found in the Event logs of the ETH-transaction of activating the hedge contract (data = your hedgeID). Click the "Write" button and approve the transaction. ETH will be sent from your ETH-address and you will automatically receive DAI from the liquidity pool contract.
+					Visit https://etherscan.io/dapp, paste the hedge contract address and click the "Search" button. Connect your Wallet account and click the "Write contract" button. Go to the "Release" section (2). Paste number that is equal to the amount of ETH that you have activated a hedge contract for (for example, 1) and your hedgeID (for example, 20). Your hedgeID can be found in the Event logs of the ETH-transaction of activating the hedge contract (data = your hedgeID). Click the "Write" button and approve the transaction. ETH will be sent from your ETH-address and you will automatically receive DAI from the liquidity pool contract.
 				</div>
 			</div>
 			<div class="mini-box-info" onclick="this.classList.toggle('open')">
@@ -562,7 +597,7 @@ export default {
 			<div class="mini-box-info" onclick="this.classList.toggle('open')">
 				<div class="mini-box-info__title">What is the privacy policy of Hegic?</div>
 				<div class="mini-box-info__content" @click.stop>
-					You will need to use a Web3 wallet called MetaMask to hold and execute hedge contracts. You are unveiling your public key and everybody can discover that you have used hedge contracts. Hope that you keep your public keys (and your private keys, goddammit) in a safe and private place. You will not be asked to provide any of your personal information or CVV code of your credit card. Thank you for your time spent on reading the privacy policy. If you do not agree with it, please consider leaving this website immediately.
+					You will need to use a Web3 wallet called Wallet to hold and execute hedge contracts. You are unveiling your public key and everybody can discover that you have used hedge contracts. Hope that you keep your public keys (and your private keys, goddammit) in a safe and private place. You will not be asked to provide any of your personal information or CVV code of your credit card. Thank you for your time spent on reading the privacy policy. If you do not agree with it, please consider leaving this website immediately.
 				</div>
 			</div>
 		</div>
