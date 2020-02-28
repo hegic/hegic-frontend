@@ -42,7 +42,7 @@ export default {
 				}
 			}
 		});
-		if (this.web3Connect.cacheProvider) {
+		if (this.web3Connect.cachedProvider) {
 			this.methods.connect();
 		}
 		//this.$el.classList.remove('loading')
