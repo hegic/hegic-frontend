@@ -3,9 +3,8 @@
 import VueRangeSlider from 'vue-slider-component'
 import Web3 from 'web3'
 import HedgeContractArtifact from '../static/HedgeContract.json'
-
-const WalletConnectProvider = window.WalletConnectProvider.default
-const Web3Connect = window.Web3Connect.default
+import WalletConnectProvider from '@walletconnect/web3-provider'
+import Web3Connect from 'web3connect'
 
 const BN = Web3.utils.BN
 
@@ -17,11 +16,20 @@ export default {
 			ethPrice: 0,
 			activeHedge: null,
 			hedges:[],
-			connecting: false,
 			processing: false,
 			swapping:false,
 			web3: null,
-			web3Connect: null,
+			web3Connect: new Web3Connect.Core({
+				cacheProvider: true,
+				providerOptions: {
+					walletconnect: {
+						package: WalletConnectProvider,
+						options: {
+							infuraId: "e6e5816422864621b96685a7beb721b9"
+						}
+					}
+				}
+			}),
 			provider: null,
 		}
 	},
@@ -31,31 +39,20 @@ export default {
 		}
 	},
 	mounted(){
-		this.web3Connect = new Web3Connect.Core({
-			cacheProvider: true,
-			providerOptions: {
-				walletconnect: {
-					package: WalletConnectProvider,
-					options: {
-						infuraId: "e6e5816422864621b96685a7beb721b9"
-					}
-				}
-			}
-		});
 		if (this.web3Connect.cachedProvider) {
-			this.methods.connect();
+			this.connect();
 		}
 		//this.$el.classList.remove('loading')
 		const updatePrice = () => fetch('https://api.coinmarketcap.com/v1/ticker/ethereum/')
-			.then(x=>x.json())
-			.then(x=>parseInt(x[0].price_usd* 100) / 100 )
+			.then(x => x.json())
+			.then(x => parseInt(x[0].price_usd * 100) / 100 )
 			.then(price => this.ethPrice = price)
 		updatePrice()
 		setInterval(updatePrice, 5000)
 	},
 	methods:{
-    connect() {
-      if (this.web3) {
+		connect() {
+		  if (this.web3) {
 				if (this.provider.close) {
 					this.provider.close();
 				}
@@ -63,45 +60,33 @@ export default {
 					this.web3Connect.clearCachedProvider();
 				}
 				this.web3 = null;
-				this.web3Connect = null;
-        this.provider = null;
-        this.account = null;
-        this.hedges = [];
-        //clearInterval(this.hedgesInterval)
-      } else {
-        this.connecting = true;
-        this.web3Connect
-          .connect()
-          .then(provider => {
-            this.provider = provider;
-            const web3 = new Web3(provider);
-            web3.eth
-              .getAccounts()
-              .then(accounts => {
-                this.web3 = web3;
-                this.connecting = false;
-                this.account = accounts[0];
-                this.contracts = {
-                  Hedge: new web3.eth.Contract(
-                    HedgeContractArtifact.abi,
-                    "0x27b6125328ca57d5d96baAa4F9cA8C5EdBaFe016",
-                    { from: accounts[0] }
-                  )
-                };
-
-                return this.renewHedges();
-              })
-              .catch(err => {
-                this.connecting = false;
-              });
-          })
-          .catch(err => {
-            this.connecting = false;
-          });
-
-        //this.hedgesInterval = setInterval(() => this.renewHedges(), 1000)
-      }
-    },
+				this.provider = null;
+				this.account = null;
+				this.hedges = [];
+		  } else {
+				this.web3Connect
+				  .connect()
+				  .then(provider => {
+						this.provider = provider;
+						const web3 = new Web3(provider);
+						web3.eth
+						  .getAccounts()
+						  .then(accounts => {
+								this.web3 = web3;
+								this.account = accounts[0];
+								this.contracts = {
+								  Hedge: new web3.eth.Contract(
+										HedgeContractArtifact.abi,
+										"0x27b6125328ca57d5d96baAa4F9cA8C5EdBaFe016",
+										{ from: accounts[0] }
+								  )
+								};
+								return this.renewHedges();
+					  	})
+				  })
+			//this.hedgesInterval = setInterval(() => this.renewHedges(), 1000)
+		  }
+		},
 		hedgeActivate(){
 			const {Hedge} = this.contracts
 			const amount = new Web3.utils.BN(this.ethAmount * 1e10).mul(new BN(1e8))
@@ -187,7 +172,7 @@ export default {
 			<a>
 				<button 
 					class="button dark fix-w"
-					:disabled="connecting" @click="connect">
+					@click="connect">
 						{{web3 ? `Disconnect : ${account}` :'Connect Wallet'}}
 				</button>
 			</a>
@@ -249,8 +234,7 @@ export default {
 
 					<a class="a-hot-fix">
 						<button
-							class="button dark" 
-							:disabled="connecting"
+							class="button dark"
 							@click="connect">Connect Wallet  &amp; Activate</button>
 					</a>
 				</div>
