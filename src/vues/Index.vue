@@ -5,6 +5,7 @@ import Web3 from 'web3'
 import HedgeContractArtifact from '../static/HedgeContract.json'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import Web3Connect from 'web3connect'
+import AggregatorABI from '../static/ChainLinkAggregator.json'
 
 const BN = Web3.utils.BN
 
@@ -25,7 +26,7 @@ export default {
 					walletconnect: {
 						package: WalletConnectProvider,
 						options: {
-							infuraId: "e6e5816422864621b96685a7beb721b9"
+							infuraId: "a6fbe259558b4c8baf936d949d3d310d"
 						}
 					}
 				}
@@ -39,16 +40,22 @@ export default {
 		}
 	},
 	mounted(){
-		if (this.web3Connect.cachedProvider) {
-			this.connect();
-		}
-		//this.$el.classList.remove('loading')
-		const updatePrice = () => fetch('https://api.coinmarketcap.com/v1/ticker/ethereum/')
-			.then(x => x.json())
-			.then(x => parseInt(x[0].price_usd * 100) / 100 )
+		const localWeb3 = new Web3('https://mainnet.infura.io/v3/a6fbe259558b4c8baf936d949d3d310d')
+
+		const priceAggregator = new localWeb3.eth.Contract(
+			AggregatorABI,
+			"0x79fEbF6B9F76853EDBcBc913e6aAE8232cFB9De9"
+		)
+
+		if (this.web3Connect.cachedProvider) this.connect()
+		
+		const updatePrice = () =>
+			priceAggregator.methods.currentAnswer().call()
+			.then( x => Math.round(x / 1e6) / 100 )
 			.then(price => this.ethPrice = price)
+
 		updatePrice()
-		setInterval(updatePrice, 5000)
+		setInterval(updatePrice, 2000)
 	},
 	methods:{
 		connect() {
@@ -404,7 +411,7 @@ export default {
 				<div class="default-text">
 					After clicking the "Pay and Activate" button 
 					you will need to confirm the transaction for
-					<span class="bold">{{ethCost}} ETH</span> in your Wallet account.
+					<span class="bold">{{ethCost}} ETH</span> in your Wallet.
 					Hedge contract will be activated immidiately 
 					after the transaction is confirmed by miners.
 					After that you will have a right to swap 
@@ -539,7 +546,7 @@ export default {
 			<div class="mini-box-info" onclick="this.classList.toggle('open')">
 				<div class="mini-box-info__title">How can I start using hedge contracts?</div>
 				<div class="mini-box-info__content" @click.stop>
-					You choose the amount of ETH that you want to hold a hedge contract for and a period of holding. Strike (execution) price of a hedge contract is always the current market price of ETH (at-the-money hedge contract). Premium and settlement fee are calculated for the chosen amount and period. After that, you will be asked to pay the amount in ETH (premium plus fee) using your Wallet account. After miners confirm the transaction, you will be able to use your ETH-address to execute the hedge contract during a certain period. In order to execute it, you should send ETH to the contract and use the release function. You will automatically receive DAI to your ETH-address.
+					You choose the amount of ETH that you want to hold a hedge contract for and a period of holding. Strike (execution) price of a hedge contract is always the current market price of ETH (at-the-money hedge contract). Premium and settlement fee are calculated for the chosen amount and period. After that, you will be asked to pay the amount in ETH (premium plus fee) using your Wallet. After miners confirm the transaction, you will be able to use your ETH-address to execute the hedge contract during a certain period. In order to execute it, you should send ETH to the contract and use the release function. You will automatically receive DAI to your ETH-address.
 			</div>
 			</div>
 			<div class="mini-box-info" onclick="this.classList.toggle('open')">
@@ -557,7 +564,7 @@ export default {
 			<div class="mini-box-info" onclick="this.classList.toggle('open')">
 				<div class="mini-box-info__title">How can I execute a hedge contract if your website's front-end is offline for some reasons?</div>
 				<div class="mini-box-info__content" @click.stop>
-					Visit https://etherscan.io/dapp, paste the hedge contract address and click the "Search" button. Connect your Wallet account and click the "Write contract" button. Go to the "Release" section (2). Paste number that is equal to the amount of ETH that you have activated a hedge contract for (for example, 1) and your hedgeID (for example, 20). Your hedgeID can be found in the Event logs of the ETH-transaction of activating the hedge contract (data = your hedgeID). Click the "Write" button and approve the transaction. ETH will be sent from your ETH-address and you will automatically receive DAI from the liquidity pool contract.
+					Visit https://etherscan.io/dapp, paste the hedge contract address and click the "Search" button. Connect your Wallet and click the "Write contract" button. Go to the "Release" section (2). Paste number that is equal to the amount of ETH that you have activated a hedge contract for (for example, 1) and your hedgeID (for example, 20). Your hedgeID can be found in the Event logs of the ETH-transaction of activating the hedge contract (data = your hedgeID). Click the "Write" button and approve the transaction. ETH will be sent from your ETH-address and you will automatically receive DAI from the liquidity pool contract.
 				</div>
 			</div>
 			<div class="mini-box-info" onclick="this.classList.toggle('open')">
@@ -581,7 +588,7 @@ export default {
 			<div class="mini-box-info" onclick="this.classList.toggle('open')">
 				<div class="mini-box-info__title">What is the privacy policy of Hegic?</div>
 				<div class="mini-box-info__content" @click.stop>
-					You will need to use a Web3 wallet called Wallet to hold and execute hedge contracts. You are unveiling your public key and everybody can discover that you have used hedge contracts. Hope that you keep your public keys (and your private keys, goddammit) in a safe and private place. You will not be asked to provide any of your personal information or CVV code of your credit card. Thank you for your time spent on reading the privacy policy. If you do not agree with it, please consider leaving this website immediately.
+					You will need to use a Web3 wallet called Metamask or Wallet Connect to hold and execute hedge contracts. You are unveiling your public key and everybody can discover that you have used hedge contracts. Hope that you keep your public keys (and your private keys, goddammit) in a safe and private place. You will not be asked to provide any of your personal information or CVV code of your credit card. Thank you for your time spent on reading the privacy policy. If you do not agree with it, please consider leaving this website immediately.
 				</div>
 			</div>
 		</div>
