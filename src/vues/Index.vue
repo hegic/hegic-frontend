@@ -8,6 +8,7 @@ import Web3Connect from 'web3connect'
 import AggregatorABI from '../static/ChainLinkAggregator.json'
 
 const BN = Web3.utils.BN
+const infuraId = '936de429817143ed994d266ab90ca264'
 
 export default {
 	data(){
@@ -25,9 +26,7 @@ export default {
 				providerOptions: {
 					walletconnect: {
 						package: WalletConnectProvider,
-						options: {
-							infuraId: "a6fbe259558b4c8baf936d949d3d310d"
-						}
+						options: { infuraId }
 					}
 				}
 			}),
@@ -40,7 +39,7 @@ export default {
 		}
 	},
 	mounted(){
-		const localWeb3 = new Web3('https://mainnet.infura.io/v3/a6fbe259558b4c8baf936d949d3d310d')
+		const localWeb3 = new Web3(`https://mainnet.infura.io/v3/${infuraId}`)
 
 		const priceAggregator = new localWeb3.eth.Contract(
 			AggregatorABI,
@@ -48,14 +47,14 @@ export default {
 		)
 
 		if (this.web3Connect.cachedProvider) this.connect()
-		
+
 		const updatePrice = () =>
 			priceAggregator.methods.currentAnswer().call()
 			.then( x => Math.round(x / 1e6) / 100 )
 			.then(price => this.ethPrice = price)
 
 		updatePrice()
-		setInterval(updatePrice, 2000)
+		// setInterval(updatePrice, 2000)
 	},
 	methods:{
 		connect() {
@@ -154,7 +153,7 @@ export default {
 		fee(){ return (this.usdAmount / 100 ).toFixed(2) },
 		cost(){ return (this.premium - -this.fee).toFixed(2) },
 		expirationString() {
-			return new Date( 
+			return new Date(
 				this.activeHedge && this.activeHedge.expiration * 1000 ||
 				Date.now() + this.weeks * 604800000
 			).toLocaleDateString(undefined, { hour:"numeric", minute:"numeric" })
@@ -177,7 +176,7 @@ export default {
 				<a href="#faq" class="mini-title m-a">FAQ</a>
 			</div>
 			<a>
-				<button 
+				<button
 					class="button dark fix-w"
 					@click="connect">
 						{{web3 ? `Disconnect : ${account}` :'Connect Wallet'}}
@@ -193,13 +192,13 @@ export default {
 				in any market conditions
 			</div>
 			<div class="default-text center page-1">
-				Hegic is an on-chain options trading protocol on Ethereum 
-				that works like an insurance for your ETH. It protects your assets 
-				from drawdowns and helps you to hold with a piece of mind. 
-				Hegic is a non-custodial, trustless, censorship-resistant system 
+				Hegic is an on-chain options trading protocol on Ethereum
+				that works like an insurance for your ETH. It protects your assets
+				from drawdowns and helps you to hold with a piece of mind.
+				Hegic is a non-custodial, trustless, censorship-resistant system
 				with on-chain settlement.
 			</div>
-			
+
 			<div class="page-first-buttons">
 				<a target="_blank" href="https://ipfs.io/ipfs/QmWy8x6vEunH4gD2gWT4Bt4bBwWX2KAEUov46tCLvMRcME">
 					<button class="button">Read Whitepaper</button>
@@ -212,10 +211,10 @@ export default {
 	</div>
 	<div id="hedge" v-if="!web3" class="main__page fix-padding">
 		<div class="big-title">Activate to protect the value of your ETH:</div>
-		
 
 
-	
+
+
 		<div class="min-cards">
 
 			<div class="min-cards__card f-1">
@@ -252,9 +251,9 @@ export default {
 					<div class="min-card__head">
 						<div class="m-a">
 							Current price of ETH
-						</div>		
+						</div>
 					</div>
-					<div class="min-card__content big-value">${{ethPrice}}</div>	
+					<div class="min-card__content big-value">${{ethPrice}}</div>
 				</div>
 			</div>
 
@@ -263,9 +262,9 @@ export default {
 					<div class="min-card__head">
 						<div class="m-a">
 							Value of your ETH
-						</div>		
+						</div>
 					</div>
-					<div class="min-card__content big-value">${{usdAmount}}</div>	
+					<div class="min-card__content big-value">${{usdAmount}}</div>
 				</div>
 			</div>
 
@@ -276,7 +275,7 @@ export default {
 							Your can lose  <br/> due to a -20% drawdown  <br/> of the price of ETH
 						</div>
 					</div>
-					<div class="min-card__content big-value">-${{loseAmount}}</div>	
+					<div class="min-card__content big-value">-${{loseAmount}}</div>
 				</div>
 			</div>
 
@@ -287,9 +286,9 @@ export default {
 					<div class="min-card__head">
 						<div class="m-a">
 							Hedge contract price (2%/week)
-						</div>		
+						</div>
 					</div>
-					<div class="min-card__content big-value">${{premium}}</div>	
+					<div class="min-card__content big-value">${{premium}}</div>
 				</div>
 			</div>
 
@@ -298,48 +297,48 @@ export default {
 					<div class="min-card__head">
 						<div class="m-a">
 							Fixed settlement fee (1%)
-						</div>		
+						</div>
 					</div>
-					<div class="min-card__content big-value">${{fee}}</div>	
+					<div class="min-card__content big-value">${{fee}}</div>
 				</div>
 			</div>
 
 			<div class="min-cards__card f-1">
 				<div class="min-card__box">
 					<div class="min-card__head">
-						<div class="m-a">							
+						<div class="m-a">
 							The cost of protecting your <br/> ETH from any losses <br/> or drawdowns for {{weeks}} {{weeks > 1 ? 'weeks' : 'week'}}
 						</div>
 					</div>
-					<div class="min-card__content big-value">${{cost}}</div>	
+					<div class="min-card__content big-value">${{cost}}</div>
 				</div>
 			</div>
 		</div>
 
-		
+
 		<div class="mini-title">
-			Holding a hedge contract gives you 
+			Holding a hedge contract gives you
 			the right to swap your ETH to DAI stablecoins
-			at the current price of ETH (${{ethPrice}}) 
+			at the current price of ETH (${{ethPrice}})
 			in any given moment till the expiration.
 		</div>
 		<div class="default-text">
-			You can choose the desired period 
-			for such a protection: 1, 2, 4 or 8 weeks. 
-			In order to have such a right, you need 
+			You can choose the desired period
+			for such a protection: 1, 2, 4 or 8 weeks.
+			In order to have such a right, you need
 			to pay the premium plus a settlement fee.
 		</div>
 		<div class="default-text">
-			Liquidity providers are taking the risks 
-			and allocating DAI that you will be able 
+			Liquidity providers are taking the risks
+			and allocating DAI that you will be able
 			to swap ETH to for a certain fixed period.
 		</div>
 	</div>
 
 	<div id="hedge" v-else-if="!activeHedge" class="main__page fix-padding">
 		<div class="big-title">Activate to protect the value of your ETH:</div>
-		
-	
+
+
 		<div class="min-cards">
 
 			<div class="min-cards__card f-2">
@@ -367,9 +366,9 @@ export default {
 					<div class="min-card__head">
 						<div class="m-a">
 							Current price of ETH
-						</div>		
+						</div>
 					</div>
-					<div class="min-card__content big-value">${{ethPrice}}</div>	
+					<div class="min-card__content big-value">${{ethPrice}}</div>
 				</div>
 			</div>
 
@@ -378,9 +377,9 @@ export default {
 					<div class="min-card__head">
 						<div class="m-a">
 							Value of your ETH
-						</div>		
+						</div>
 					</div>
-					<div class="min-card__content big-value">${{usdAmount}}</div>	
+					<div class="min-card__content big-value">${{usdAmount}}</div>
 				</div>
 			</div>
 
@@ -389,9 +388,9 @@ export default {
 					<div class="min-card__head">
 						<div class="m-a">
 							Hedge contract price(2%/week)
-						</div>		
+						</div>
 					</div>
-					<div class="min-card__content big-value">${{premium}}</div>	
+					<div class="min-card__content big-value">${{premium}}</div>
 				</div>
 			</div>
 
@@ -400,24 +399,24 @@ export default {
 					<div class="min-card__head">
 						<div class="m-a">
 							Fixed settlement fee (1%)
-						</div>		
+						</div>
 					</div>
-					<div class="min-card__content big-value">${{fee}}</div>	
+					<div class="min-card__content big-value">${{fee}}</div>
 				</div>
 			</div>
 		</div>
 		<div class="flex">
 			<div class="flex flex-1 flex-colunm">
 				<div class="default-text">
-					After clicking the "Pay and Activate" button 
+					After clicking the "Pay and Activate" button
 					you will need to confirm the transaction for
 					<span class="bold">{{ethCost}} ETH</span> in your Wallet.
-					Hedge contract will be activated immidiately 
+					Hedge contract will be activated immidiately
 					after the transaction is confirmed by miners.
-					After that you will have a right to swap 
-					<span style="white-space: nowrap;" class="bold">{{ethAmount}} ETH to {{usdAmount}} DAI</span> at any given moment 
+					After that you will have a right to swap
+					<span style="white-space: nowrap;" class="bold">{{ethAmount}} ETH to {{usdAmount}} DAI</span> at any given moment
 					before the expiration on {{expirationString}}.
-				</div>				
+				</div>
 			</div>
 			<div class="flex flex-1 flex-colunm page-2-right-box">
 				<div class="big-title">{{ethCost}} ETH (${{cost}})</div>
@@ -432,7 +431,7 @@ export default {
 
 	<div id="hedge" v-else="" class="main__page fix-padding">
 		<div class="big-title">You are holding a hedge contract <br/> for {{parseInt(activeHedge.amount / 1e14) / 10000}} ETH (expires on {{expirationString}}):</div>
-		
+
 		<div class="mini-box flex flex-colunm page-2-f-3-box">
 			<div class="mini-title center fix-margin-1">Amount of ETH that you can swap to DAI:</div>
 			<div class="big-title m-a">
@@ -445,12 +444,12 @@ export default {
 				{{parseInt(activeHedge.strike / 1e16) / 100}} DAI
 			</div>
 			<button v-on:click="release" :disabled="processing" class="button">Execute and Swap</button>
-		</div>			
+		</div>
 	</div>
 
 	<div class="main__page" v-if="web3">
 		<div class="big-title">History</div>
-		
+
 		<div class="history-box">
 			<div v-for="hedge in hedges" v-bind:key="hedge.id" class="history-box__history" onclick="this.classList.toggle('open')">
 				<div class="history-box__header">№{{hedge.id}}: {{hedge.amount / 1e18}} ETH ({{hedge.strike / 1e18}} DAI)</div>
@@ -477,7 +476,7 @@ export default {
 					</table>
 				</div>
 			</div>
-		</div>		
+		</div>
 
 	</div>
 
@@ -488,9 +487,9 @@ export default {
 				<div class="tile-info__box holders">
 					<div class="tile-info__title">ETH Holders</div>
 					<div class="tile-info__content">
-						
+
 							You want to buy more ETH for your mid/long-term portfolio, but you are unsure if the price of ETH will not drop in the next few weeks/months.
-						
+
 					</div>
 				</div>
 			</div>
@@ -498,9 +497,9 @@ export default {
 				<div class="tile-info__box traders">
 					<div class="tile-info__title">ETH Traders</div>
 					<div class="tile-info__content">
-						
+
 							You want to open a long (or a leveraged long) position and buy ETH, and you need to hedge your position: protect it from the potential losses.
-						
+
 					</div>
 				</div>
 			</div>
@@ -510,9 +509,9 @@ export default {
 				<div class="tile-info__box miners">
 					<div class="tile-info__title">ETH Miners</div>
 					<div class="tile-info__content">
-						
+
 							You know how much ETH you will mine in the next month and you need money to cover your mining farm expenses, but you are unsure if you will have profits in the end of the month.
-						
+
 					</div>
 				</div>
 			</div>
@@ -523,7 +522,7 @@ export default {
 
 							You want to buy ETH for you mom, dad, friend, girlfriend or somebody else but you do not want them to lose faith in crypto if the price falls down. You and your loved ones need to have a piece of mind for the first mile of holding.
 
-					</div>	
+					</div>
 				</div>
 			</div>
 		</div>
@@ -594,7 +593,7 @@ export default {
 		</div>
 	</div>
 	<div class="main__footer">
-		<div class="links">				
+		<div class="links">
 			<a target="_blank" href="https://ipfs.io/ipfs/QmWy8x6vEunH4gD2gWT4Bt4bBwWX2KAEUov46tCLvMRcME" class="links__link">Whitepaper</a>
 			<a target="_blank" href="http://github.com/hegic" class="links__link">Github</a>
 			<a target="_blank" href="https://twitter.com/HegicOptions" class="links__link">Twitter</a>
