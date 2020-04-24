@@ -1,0 +1,216 @@
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-SemiBoldItalic.eot');
+    src: local('Exo SemiBold Italic'), local('Exo-SemiBoldItalic'),
+        url('Exo-SemiBoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('Exo-SemiBoldItalic.woff2') format('woff2'),
+        url('Exo-SemiBoldItalic.woff') format('woff'),
+        url('Exo-SemiBoldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-ThinItalic.eot');
+    src: local('Exo Thin Italic'), local('Exo-ThinItalic'),
+        url('Exo-ThinItalic.eot?#iefix') format('embedded-opentype'),
+        url('Exo-ThinItalic.woff2') format('woff2'),
+        url('Exo-ThinItalic.woff') format('woff'),
+        url('Exo-ThinItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-Medium.eot');
+    src: local('Exo Medium'), local('Exo-Medium'),
+        url('Exo-Medium.eot?#iefix') format('embedded-opentype'),
+        url('Exo-Medium.woff2') format('woff2'),
+        url('Exo-Medium.woff') format('woff'),
+        url('Exo-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-Italic.eot');
+    src: local('Exo Italic'), local('Exo-Italic'),
+        url('Exo-Italic.eot?#iefix') format('embedded-opentype'),
+        url('Exo-Italic.woff2') format('woff2'),
+        url('Exo-Italic.woff') format('woff'),
+        url('Exo-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-Thin.eot');
+    src: local('Exo Thin'), local('Exo-Thin'),
+        url('Exo-Thin.eot?#iefix') format('embedded-opentype'),
+        url('Exo-Thin.woff2') format('woff2'),
+        url('Exo-Thin.woff') format('woff'),
+        url('Exo-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-LightItalic.eot');
+    src: local('Exo Light Italic'), local('Exo-LightItalic'),
+        url('Exo-LightItalic.eot?#iefix') format('embedded-opentype'),
+        url('Exo-LightItalic.woff2') format('woff2'),
+        url('Exo-LightItalic.woff') format('woff'),
+        url('Exo-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-Regular.eot');
+    src: local('Exo Regular'), local('Exo-Regular'),
+        url('Exo-Regular.eot?#iefix') format('embedded-opentype'),
+        url('Exo-Regular.woff2') format('woff2'),
+        url('Exo-Regular.woff') format('woff'),
+        url('Exo-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-MediumItalic.eot');
+    src: local('Exo Medium Italic'), local('Exo-MediumItalic'),
+        url('Exo-MediumItalic.eot?#iefix') format('embedded-opentype'),
+        url('Exo-MediumItalic.woff2') format('woff2'),
+        url('Exo-MediumItalic.woff') format('woff'),
+        url('Exo-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-BoldItalic.eot');
+    src: local('Exo Bold Italic'), local('Exo-BoldItalic'),
+        url('Exo-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('Exo-BoldItalic.woff2') format('woff2'),
+        url('Exo-BoldItalic.woff') format('woff'),
+        url('Exo-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-Black.eot');
+    src: local('Exo Black'), local('Exo-Black'),
+        url('Exo-Black.eot?#iefix') format('embedded-opentype'),
+        url('Exo-Black.woff2') format('woff2'),
+        url('Exo-Black.woff') format('woff'),
+        url('Exo-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-ExtraLightItalic.eot');
+    src: local('Exo ExtraLight Italic'), local('Exo-ExtraLightItalic'),
+        url('Exo-ExtraLightItalic.eot?#iefix') format('embedded-opentype'),
+        url('Exo-ExtraLightItalic.woff2') format('woff2'),
+        url('Exo-ExtraLightItalic.woff') format('woff'),
+        url('Exo-ExtraLightItalic.ttf') format('truetype');
+    font-weight: 200;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-ExtraLight.eot');
+    src: local('Exo ExtraLight'), local('Exo-ExtraLight'),
+        url('Exo-ExtraLight.eot?#iefix') format('embedded-opentype'),
+        url('Exo-ExtraLight.woff2') format('woff2'),
+        url('Exo-ExtraLight.woff') format('woff'),
+        url('Exo-ExtraLight.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-SemiBold.eot');
+    src: local('Exo SemiBold'), local('Exo-SemiBold'),
+        url('Exo-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('Exo-SemiBold.woff2') format('woff2'),
+        url('Exo-SemiBold.woff') format('woff'),
+        url('Exo-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-Bold.eot');
+    src: local('Exo Bold'), local('Exo-Bold'),
+        url('Exo-Bold.eot?#iefix') format('embedded-opentype'),
+        url('Exo-Bold.woff2') format('woff2'),
+        url('Exo-Bold.woff') format('woff'),
+        url('Exo-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-ExtraBold.eot');
+    src: local('Exo ExtraBold'), local('Exo-ExtraBold'),
+        url('Exo-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('Exo-ExtraBold.woff2') format('woff2'),
+        url('Exo-ExtraBold.woff') format('woff'),
+        url('Exo-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-ExtraBoldItalic.eot');
+    src: local('Exo ExtraBold Italic'), local('Exo-ExtraBoldItalic'),
+        url('Exo-ExtraBoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('Exo-ExtraBoldItalic.woff2') format('woff2'),
+        url('Exo-ExtraBoldItalic.woff') format('woff'),
+        url('Exo-ExtraBoldItalic.ttf') format('truetype');
+    font-weight: 800;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-Light.eot');
+    src: local('Exo Light'), local('Exo-Light'),
+        url('Exo-Light.eot?#iefix') format('embedded-opentype'),
+        url('Exo-Light.woff2') format('woff2'),
+        url('Exo-Light.woff') format('woff'),
+        url('Exo-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Exo';
+    src: url('Exo-BlackItalic.eot');
+    src: local('Exo Black Italic'), local('Exo-BlackItalic'),
+        url('Exo-BlackItalic.eot?#iefix') format('embedded-opentype'),
+        url('Exo-BlackItalic.woff2') format('woff2'),
+        url('Exo-BlackItalic.woff') format('woff'),
+        url('Exo-BlackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
