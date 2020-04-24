@@ -1,0 +1,15 @@
+<svg width="270" height="67" viewBox="0 0 270 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+<line x1="2.71202" y1="64.5913" x2="46.712" y2="33.5913" stroke="#45FFF4"/>
+<line x1="47.1485" y1="33.5226" x2="92.1485" y2="47.5226" stroke="#45FFF4"/>
+<line x1="92" y1="47.5" x2="137" y2="47.5" stroke="#45FFF4"/>
+<line x1="137.646" y1="47.6464" x2="182.646" y2="2.64645" stroke="#45FFF4"/>
+<path d="M183 2.5L227.18 18.5337" stroke="#45FFF4"/>
+<path d="M228 19L272.361 63.6543" stroke="#45FFF4"/>
+<circle cx="2.5" cy="64.5" r="2" fill="#45FFF4" stroke="#45FFF4"/>
+<circle cx="47.5" cy="33.5" r="2" fill="#45FFF4" stroke="#45FFF4"/>
+<circle cx="92.5" cy="47.5" r="2" fill="#45FFF4" stroke="#45FFF4"/>
+<circle cx="137.5" cy="47.5" r="2" fill="#45FFF4" stroke="#45FFF4"/>
+<circle cx="182.5" cy="2.5" r="2" fill="#45FFF4" stroke="#45FFF4"/>
+<circle cx="227.5" cy="18.5" r="2" fill="#45FFF4" stroke="#45FFF4"/>
+<circle cx="272.5" cy="64.5" r="2" fill="#45FFF4" stroke="#45FFF4"/>
+</svg>

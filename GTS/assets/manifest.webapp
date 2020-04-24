@@ -1,0 +1,14 @@
+{
+  "version": "1.0.1",
+  "name": "GradualTokenSwap",
+  "description": "",
+  "icons": {
+    "60": "/GTS/assets/firefox_app_60x60.png",
+    "128": "/GTS/assets/firefox_app_128x128.png",
+    "512": "/GTS/assets/firefox_app_512x512.png"
+  },
+  "developer": {
+    "name": "0mllwntrmt3",
+    "url": null
+  }
+}

@@ -42,12 +42,6 @@ and limitations under the License.
 /*! https://mths.be/punycode v1.4.1 by @mathias */
 
 /**
-  * vue-class-component v7.0.1
-  * (c) 2015-present Evan You
-  * @license MIT
-  */
-
-/**
  * [js-sha3]{@link https://github.com/emn178/js-sha3}
  *
  * @version 0.5.7
